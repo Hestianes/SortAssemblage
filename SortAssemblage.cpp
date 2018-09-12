@@ -13,6 +13,7 @@ public:
 	void ShowSequence();
 	void BuildSequence();
 	void InsertionSort();
+	void SelectionSort();
 
 private:
 	int sequence[50];
@@ -33,7 +34,7 @@ SortAssemblage::SortAssemblage()
 
 SortAssemblage::~SortAssemblage()
 {
-	cout << "destruction called." << endl;
+	cout << endl << "destruction called." << endl;
 }
 
 void SortAssemblage::ShowSequence()
@@ -92,19 +93,42 @@ void SortAssemblage::InsertionSort()
 	}
 }
 
+void SortAssemblage::SelectionSort()
+{
+	int loopViriable = 0;
+	int tempBuff = 0;
+	for (size_t k = 0; k < 49; k++)
+	{
+		tempBuff = this->sequence[k];
+		loopViriable = k;
+		for (size_t j = loopViriable + 1; j < 50; j++)
+		{
+			if (this->sequence[j] < tempBuff)
+			{
+				tempBuff = this->sequence[j];
+				loopViriable = j;
+			}
+		}
+		this->sequence[loopViriable] = this->sequence[k];
+		this->sequence[k] = tempBuff;
+	}
+}
+
+
+
 int main()
 {
 	SortAssemblage* sortAss1 = new SortAssemblage();
 
-	sortAss1->InsertionSort();
+	sortAss1->SelectionSort();
 	sortAss1->ShowSequence();
 
 	sortAss1->BuildSequence();
 	sortAss1->ShowSequence();
-	sortAss1->InsertionSort();
+	sortAss1->SelectionSort();
 	sortAss1->ShowSequence();
 
+	delete sortAss1;
 	system("PAUSE");
-
 	return 0;
 }
