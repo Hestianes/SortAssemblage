@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include <time.h>
 
 using namespace std;
@@ -14,9 +14,11 @@ public:
 	void BuildSequence();
 	void InsertionSort();
 	void SelectionSort();
+	void QuickSort();
 
 private:
 	int sequence[50];
+	void atom_QuickSort(int head, int tail);
 };
 
 SortAssemblage::SortAssemblage()
@@ -114,18 +116,50 @@ void SortAssemblage::SelectionSort()
 	}
 }
 
+void SortAssemblage::QuickSort()
+{
+	this->atom_QuickSort(0, 49);
+}
+void SortAssemblage::atom_QuickSort(int head, int tail)
+{
+	if (head >= tail)
+	{
+		return;
+	}
 
+	int SwitchPoint = head, CheckPoint = tail;
+	int standard = sequence[head];
+
+	while (SwitchPoint < CheckPoint)
+	{
+		while (SwitchPoint < CheckPoint && this->sequence[CheckPoint] >= standard)
+		{
+			CheckPoint--;
+		}
+		this->sequence[SwitchPoint] = this->sequence[CheckPoint];
+
+		while (SwitchPoint < CheckPoint && this->sequence[SwitchPoint] <= standard)
+		{
+			SwitchPoint++;
+		}
+		this->sequence[CheckPoint] = this->sequence[SwitchPoint];
+	}
+	this->sequence[SwitchPoint] = standard;
+
+	this->atom_QuickSort(head, SwitchPoint - 1);
+	this->atom_QuickSort(SwitchPoint + 1, tail);
+}
 
 int main()
 {
 	SortAssemblage* sortAss1 = new SortAssemblage();
 
-	sortAss1->SelectionSort();
+	sortAss1->QuickSort();
 	sortAss1->ShowSequence();
 
 	sortAss1->BuildSequence();
 	sortAss1->ShowSequence();
-	sortAss1->SelectionSort();
+	sortAss1->QuickSort();
 	sortAss1->ShowSequence();
 
 	delete sortAss1;
